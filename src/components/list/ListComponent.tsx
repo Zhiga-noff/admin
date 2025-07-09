@@ -1,3 +1,4 @@
+'use client'
 import {
     Table,
     TableBody,
@@ -7,6 +8,7 @@ import {
 } from "../ui/table";
 import Badge from "../ui/badge/Badge";
 import Image from "next/image";
+import {usePathname} from "next/navigation";
 
 // Define the TypeScript interface for the table rows
 interface Product {
@@ -70,6 +72,10 @@ const tableData: Product[] = [
 ];
 
 export default function ListComponent() {
+    
+    const path = usePathname()
+    const flag = path ==='/'
+
     return (
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
             <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -96,6 +102,12 @@ export default function ListComponent() {
                             >
                                 Название
                             </TableCell>
+                            {flag && <TableCell
+                                isHeader
+                                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                            >
+                                Операция
+                            </TableCell>}
                             <TableCell
                                 isHeader
                                 className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
@@ -124,27 +136,38 @@ export default function ListComponent() {
                             <TableRow key={product.id} className="">
                                 <TableCell className="py-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="h-[50px] w-[50px] overflow-hidden rounded-md">
-                                            <Image
-                                                width={50}
-                                                height={50}
-                                                src={product.image}
-                                                className="h-[50px] w-[50px]"
-                                                alt={product.name}
-                                            />
-                                        </div>
+                                        {/*<div className="h-[50px] w-[50px] overflow-hidden rounded-md">*/}
+                                            {/*<Image*/}
+                                            {/*    width={50}*/}
+                                            {/*    height={50}*/}
+                                            {/*    src={product.image}*/}
+                                            {/*    className="h-[50px] w-[50px]"*/}
+                                            {/*    alt={product.name}*/}
+                                            {/*/>*/}
+                                        {/*</div>*/}
                                         <div>
                                             <p className="font-medium text-gray-800 text-theme-sm dark:text-white/90">
                                                 {product.name}
                                             </p>
-                                            <span className="text-gray-500 text-theme-xs dark:text-gray-400">
-                        {product.variants}
-                      </span>
                                         </div>
                                     </div>
                                 </TableCell>
+                                {flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                                    {product.category}
+                                </TableCell>}
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                    {product.price}
+                                    <Badge
+                                        size="sm"
+                                        color={
+                                            product.status === "Delivered"
+                                                ? "success"
+                                                : product.status === "Pending"
+                                                    ? "warning"
+                                                    : "error"
+                                        }
+                                    >
+                                        {product.status}
+                                    </Badge>
                                 </TableCell>
                                 <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                     {product.category}

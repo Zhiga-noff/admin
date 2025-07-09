@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import React from "react";
 import RecentOrders from "@/components/ecommerce/RecentOrders";
+import ListComponent from "@/components/list/ListComponent";
 
 export const metadata: Metadata = {
     title:
@@ -33,7 +34,7 @@ export default function Ecommerce() {
 
             {/* список для видео */}
             <div className="col-span-12">
-                <RecentOrders/>
+                <ListComponent/>
             </div>
         </div>
     );
