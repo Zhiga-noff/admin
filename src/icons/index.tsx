@@ -13,7 +13,6 @@ import VideoIcon from "./videos.svg";
 import AudioIcon from "./audio.svg";
 import GridIcon from "./grid.svg";
 import FileIcon from "./file.svg";
-import DownloadIcon from "./download.svg";
 import ArrowRightIcon from "./arrow-right.svg";
 import GroupIcon from "./group.svg";
 import BoxIconLine from "./box-line.svg";
@@ -51,9 +50,9 @@ import HorizontaLDots from "./horizontal-dots.svg";
 import ChatIcon from "./chat.svg";
 import MoreDotIcon from "./more-dot.svg";
 import BellIcon from "./bell.svg";
+import DownloadIcon from './download-circle.svg'
 
 export {
-  DownloadIcon,
   BellIcon,
   MoreDotIcon,
   FileIcon,
@@ -106,4 +105,5 @@ export {
   HorizontaLDots,
   ChevronUpIcon,
   ChatIcon,
+  DownloadIcon
 };

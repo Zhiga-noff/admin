@@ -1,0 +1,58 @@
+import {ListTypes} from "@/types/list.types";
+
+export const ListConstant:ListTypes[] = [{
+    id: 0,
+    name: "ВМС Индии приняли в Калининграде фрегат проек...",
+    category: "Транскрибация",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Pending"
+},{
+    id: 1,
+    name: "Ким Чен Ын не сдержал слез на концерте в честь героев В...",
+    category: "Субтитрирование",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Pending"
+},{
+    id: 2,
+    name: "Врачи опасаются заражения крови у главы «Тайгана» из-за тру...",
+    category: "Перевод",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Pending"
+},{
+    id:3,
+    name: "Посол Азербайджана покинул здание МИД России",
+    category: "Субтитрирование",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Delivered"
+},{
+    id: 4,
+    name: "«Герани» разнесли на кусочки пункт дислокации ВСУ в ра...",
+    category: "Субтитрирование",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Delivered"
+},{
+    id: 5,
+    name: "«Герани» разнесли на кусочки пункт дислокации ВСУ в ра...",
+    category: "Транскрибация",
+    download: "#",
+    source: "#",
+    published: new Date,
+    update: new Date,
+    status: "Canceled"
+},
+]
