@@ -1,17 +1,27 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-
-import Button from '@/components/ui/button/Button';
-import { DownloadIcon } from '@/icons';
-import { ListConstant } from '@/constant/list.constant';
-import Badge from '../ui/badge/Badge';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '../ui/table';
+import { GET_TRANSCRIBATION } from '@/constant/api';
+import { useFetchData } from '@/hooks/fetch-data';
+import RowOfListComponent from '@/components/list/row-of-list/RowOfListComponent';
+import { ListTypes } from '@/types/list.types';
+import InfiniteScroll from 'react-infinite-scroller';
+import { useState } from 'react';
 
 export default function ListComponent() {
+  const { items: data, nextPage: loadMore, hasMore, fetchError } = useFetchData(GET_TRANSCRIBATION);
+  const [loading, setLoading] = useState(false);
   const path = usePathname();
   const flag = path === '/';
 
+  // useState(() => {
+  //   if (data.length !== 0) {
+  //     setLoading(false);
+  //   }
+  // }, [hasMore]);
+
+  //
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -26,116 +36,71 @@ export default function ListComponent() {
         </div>
       </div>
       <div className="max-w-full overflow-x-auto">
-        <Table>
-          {/* Table Header */}
-          <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
-            <TableRow>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Название
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                ⠀
-              </TableCell>
-              {flag && (
+        {/* @ts-ignore */}
+        <InfiniteScroll
+          threshold={450} // Расстояние до конца последнего элемента на котором начнется загрузка след компонентов
+          pageStart={1} // страница с которой происходит загрузка
+          hasMore={hasMore} // Флаг разрешающий загрузку
+          loadMore={loadMore} // Функция загрузки новых компанентов
+          loader={
+            <div className="loader" key={0}>
+              Loading ...
+            </div>
+          }
+        >
+          <Table>
+            {/* Table Header */}
+            <TableHeader className="border-gray-100 dark:border-gray-800 border-y">
+              <TableRow>
                 <TableCell
                   isHeader
                   className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  Операция
+                  Название
                 </TableCell>
-              )}
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Статус
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Дата добавления и обновления
-              </TableCell>
-              <TableCell
-                isHeader
-                className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-              >
-                Скачать
-              </TableCell>
-            </TableRow>
-          </TableHeader>
-
-          {/* Table Body */}
-
-          <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
-            {ListConstant.map((file) => (
-              <TableRow key={file.id} className="">
-                <TableCell className="py-3">
-                  <div className="flex items-center gap-3">
-                    {/* <div className="h-[50px] w-[50px] overflow-hidden rounded-md"> */}
-                    {/* <Image */}
-                    {/*    width={50} */}
-                    {/*    height={50} */}
-                    {/*    src={product.image} */}
-                    {/*    className="h-[50px] w-[50px]" */}
-                    {/*    alt={product.name} */}
-                    {/* /> */}
-                    {/* </div> */}
-                    <div>
-                      <a
-                        href={file.source}
-                        className="font-medium underline  text-gray-800 text-theme-sm dark:text-white/90"
-                      >
-                        {file.name}
-                      </a>
-                    </div>
-                  </div>
+                <TableCell
+                  isHeader
+                  className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  ⠀
                 </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">🔽</TableCell>
                 {flag && (
-                  <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>
-                )}
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  <Badge
-                    size="sm"
-                    color={file.status === 'Delivered' ? 'success' : file.status === 'Pending' ? 'warning' : 'error'}
+                  <TableCell
+                    isHeader
+                    className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                   >
-                    {file.status}
-                  </Badge>
+                    Операция
+                  </TableCell>
+                )}
+                <TableCell
+                  isHeader
+                  className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Статус
                 </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  <span className="text-gray-500 text-theme-xs dark:text-gray-400">
-                    Добавлено: {String(file.published)}
-                  </span>{' '}
-                  <br />{' '}
-                  <span className="text-gray-500 text-theme-xs dark:text-gray-400">
-                    Обновлено: {String(file.update)}
-                  </span>
+                <TableCell
+                  isHeader
+                  className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Дата добавления и обновления
                 </TableCell>
-                <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                  {file.status === 'Canceled' ? (
-                    ''
-                  ) : (
-                    <a href={file.download}>
-                      <Button
-                        size="sm"
-                        startIcon={<DownloadIcon />}
-                        variant={file.status === 'Pending' ? 'outline' : 'primary'}
-                        disabled={file.status === 'Pending'}
-                      />
-                    </a>
-                  )}
+                <TableCell
+                  isHeader
+                  className="py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Скачать
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+
+            {/* Table Body */}
+            <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
+              {data.map((file: ListTypes) => {
+                return <RowOfListComponent file={file as ListTypes} flag={flag} key={file?.id as number} />;
+              })}
+            </TableBody>
+          </Table>
+        </InfiniteScroll>
       </div>
     </div>
   );

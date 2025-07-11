@@ -4,111 +4,66 @@ import Badge from '@/components/ui/badge/Badge';
 import Button from '@/components/ui/button/Button';
 import { DownloadIcon } from '@/icons';
 import { ListTypes } from '@/types/list.types';
+import { toFormatDate } from '@/utils/time';
 
 interface RowOfListProps {
   file: ListTypes;
   flag: boolean;
 }
 
-const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => (
-  <div>
-    <TableRow key={file.id} className="">
-      <TableCell className="py-3">
-        <div className="flex items-center gap-3">
-          {/* <div className="h-[50px] w-[50px] overflow-hidden rounded-md"> */}
-          {/* <Image */}
-          {/*    width={50} */}
-          {/*    height={50} */}
-          {/*    src={product.image} */}
-          {/*    className="h-[50px] w-[50px]" */}
-          {/*    alt={product.name} */}
-          {/* /> */}
-          {/* </div> */}
-          <div>
-            <a href={file.source} className="font-medium underline  text-gray-800 text-theme-sm dark:text-white/90">
-              {file.name}
-            </a>
+const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
+  // const { title, inFilePath, outFilePath, done, dateCreate, dateUpdate, id, stateTitle } = file;
+
+  const published = toFormatDate(file?.dateCreate);
+  const update = toFormatDate(file?.dateUpdate);
+  // console.log(file?.title, file);
+
+  return (
+    <>
+      <TableRow className="">
+        <TableCell className="py-3">
+          <div className="flex items-center gap-3">
+            {/*<div className="h-[50px] w-[50px] overflow-hidden rounded-md flex center">*/}
+            {/*  <Image width={24} height={24} src={'/images/upload.svg'} className="h-[24px] w-[24px]" alt={file.status}/>*/}
+            {/*</div>*/}
+            <div>
+              <a
+                href={file?.inFilePath ?? ''}
+                className="font-medium underline  text-gray-800 text-theme-sm dark:text-white/90"
+              >
+                {file?.title}
+              </a>
+            </div>
           </div>
-        </div>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">🔽</TableCell>
-      {flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>}
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        <Badge
-          size="sm"
-          color={file.status === 'Delivered' ? 'success' : file.status === 'Pending' ? 'warning' : 'error'}
-        >
-          {file.status}
-        </Badge>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        <span className="text-gray-500 text-theme-xs dark:text-gray-400">Добавлено: {String(file.published)}</span>{' '}
-        <br /> <span className="text-gray-500 text-theme-xs dark:text-gray-400">Обновлено: {String(file.update)}</span>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        {file.status === 'Canceled' ? (
-          ''
-        ) : (
-          <a href={file.download}>
-            <Button
-              size="sm"
-              startIcon={<DownloadIcon />}
-              variant={file.status === 'Pending' ? 'outline' : 'primary'}
-              disabled={file.status === 'Pending'}
-            />
-          </a>
-        )}
-      </TableCell>
-    </TableRow>
-    <TableRow key={file.id} className="">
-      <TableCell className="py-3">
-        <div className="flex items-center gap-3">
-          {/* <div className="h-[50px] w-[50px] overflow-hidden rounded-md"> */}
-          {/* <Image */}
-          {/*    width={50} */}
-          {/*    height={50} */}
-          {/*    src={product.image} */}
-          {/*    className="h-[50px] w-[50px]" */}
-          {/*    alt={product.name} */}
-          {/* /> */}
-          {/* </div> */}
-          <div>
-            <a href={file.source} className="font-medium underline  text-gray-800 text-theme-sm dark:text-white/90">
-              {file.name}
+        </TableCell>
+        <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">🔽</TableCell>
+        {/*{flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>}*/}
+        <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          <Badge size="sm" color={file?.done ? 'success' : file?.stateTitle === 'Ошибка' ? 'error' : 'warning'}>
+            {file?.stateTitle}
+          </Badge>
+        </TableCell>
+        <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          <span className="text-gray-500 text-theme-xs dark:text-gray-400">Добавлено: {String(published)}</span>
+          <br /> <span className="text-gray-500 text-theme-xs dark:text-gray-400">Обновлено: {String(update)}</span>
+        </TableCell>
+        <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+          {file?.stateTitle === 'Ошибка' ? (
+            ''
+          ) : (
+            <a href={file?.outFilePath ?? ''}>
+              <Button
+                size="sm"
+                startIcon={<DownloadIcon />}
+                variant={file?.done ? 'primary' : 'outline'}
+                disabled={!file?.done}
+              />
             </a>
-          </div>
-        </div>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">🔽</TableCell>
-      {flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>}
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        <Badge
-          size="sm"
-          color={file.status === 'Delivered' ? 'success' : file.status === 'Pending' ? 'warning' : 'error'}
-        >
-          {file.status}
-        </Badge>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        <span className="text-gray-500 text-theme-xs dark:text-gray-400">Добавлено: {String(file.published)}</span>{' '}
-        <br /> <span className="text-gray-500 text-theme-xs dark:text-gray-400">Обновлено: {String(file.update)}</span>
-      </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-        {file.status === 'Canceled' ? (
-          ''
-        ) : (
-          <a href={file.download}>
-            <Button
-              size="sm"
-              startIcon={<DownloadIcon />}
-              variant={file.status === 'Pending' ? 'outline' : 'primary'}
-              disabled={file.status === 'Pending'}
-            />
-          </a>
-        )}
-      </TableCell>
-    </TableRow>
-  </div>
-);
+          )}
+        </TableCell>
+      </TableRow>
+    </>
+  );
+};
 
 export default RowOfListComponent;
