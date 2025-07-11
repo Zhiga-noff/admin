@@ -5,6 +5,8 @@ import Button from '@/components/ui/button/Button';
 import { DownloadIcon } from '@/icons';
 import { ListTypes } from '@/types/list.types';
 import { toFormatDate } from '@/utils/time';
+import { GET_TRANSCRIBATION } from '@/constant/api';
+import { api } from '@/utils/api.services';
 
 interface RowOfListProps {
   file: ListTypes;
@@ -13,10 +15,29 @@ interface RowOfListProps {
 
 const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
   // const { title, inFilePath, outFilePath, done, dateCreate, dateUpdate, id, stateTitle } = file;
+  // const [] = useState(false);
+
+  const fetchStateList = async () => {
+    const result = await api.get(`${GET_TRANSCRIBATION}/${file.id}/stages`, {
+      params: {
+        page: 1,
+        size: 10,
+      },
+    });
+    console.log(result.data);
+  };
 
   const published = toFormatDate(file?.dateCreate);
   const update = toFormatDate(file?.dateUpdate);
   // console.log(file?.title, file);
+
+  const clickToList = () => {
+    console.log('list');
+  };
+
+  // useEffect(() => {
+  //   ff();
+  // }, []);
 
   return (
     <TableRow className="">
@@ -35,7 +56,12 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
           </div>
         </div>
       </TableCell>
-      <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">🔽</TableCell>
+      <TableCell
+        className="py-3 text-gray-500 text-theme-sm dark:text-gray-400 cursor-pointer"
+        onClick={fetchStateList}
+      >
+        🔽
+      </TableCell>
       {/* {flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>} */}
       <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
         <Badge size="sm" color={file?.done ? 'success' : file?.stateTitle === 'Ошибка' ? 'error' : 'warning'}>
