@@ -37,13 +37,13 @@ export const useFetchData = (urlApi: string) => {
         /* Если url предыдущей загрузки совпадает с нынешней в таком случае
          * код возрващает предыдущий результат не дающий дублировать информацию */
         if (!newItems || prev.lastFetchedItemID === lastNewItemID) {
-          duplicateFetchCount = duplicateFetchCount + 1;
+          duplicateFetchCount += 1;
           return {
             ...prev,
           };
         }
         /* Обнуляю переменную по отслеживанию загрузок
-         * обновляю массив с информацией*/
+         * обновляю массив с информацией */
         duplicateFetchCount = 0;
         return {
           ...prev,
@@ -60,12 +60,17 @@ export const useFetchData = (urlApi: string) => {
       setHasMore(false);
     }
 
-    /* Если массив пуст возвращаю ошибку*/
+    /* Если массив пуст возвращаю ошибку */
     if (items.length === 0 || !items) {
       setFetchError(true);
     }
     setFetchError(!!error);
+    setHasMore(false);
   };
 
-  return { items, nextPage, hasMore, fetchError };
+  const moreDownload = () => {
+    setHasMore(true);
+  };
+
+  return { items, nextPage, hasMore, fetchError, moreDownload };
 };

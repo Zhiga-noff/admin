@@ -1,27 +1,21 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '../ui/table';
 import { GET_TRANSCRIBATION } from '@/constant/api';
 import { useFetchData } from '@/hooks/fetch-data';
 import RowOfListComponent from '@/components/list/row-of-list/RowOfListComponent';
 import { ListTypes } from '@/types/list.types';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useState } from 'react';
+import Button from '@/components/ui/button/Button';
+import { Table, TableBody, TableCell, TableHeader, TableRow } from '../ui/table';
 
 export default function ListComponent() {
-  const { items: data, nextPage: loadMore, hasMore, fetchError } = useFetchData(GET_TRANSCRIBATION);
+  const { items: data, nextPage: loadMore, hasMore, moreDownload } = useFetchData(GET_TRANSCRIBATION);
   const [loading, setLoading] = useState(false);
   const path = usePathname();
   const flag = path === '/';
 
-  // useState(() => {
-  //   if (data.length !== 0) {
-  //     setLoading(false);
-  //   }
-  // }, [hasMore]);
-
-  //
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6">
       <div className="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -102,6 +96,9 @@ export default function ListComponent() {
           </Table>
         </InfiniteScroll>
       </div>
+      <Button style={{ display: 'block', marginTop: '16px' }} className="mx-auto" onClick={moreDownload}>
+        Посмотреть еще
+      </Button>
     </div>
   );
 }

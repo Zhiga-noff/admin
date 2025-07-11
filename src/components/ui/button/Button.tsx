@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 
 interface ButtonProps {
   children?: ReactNode; // Button text or content
@@ -9,9 +9,12 @@ interface ButtonProps {
   onClick?: () => void; // Click handler
   disabled?: boolean; // Disabled state
   className?: string; // Disabled state
+
+  style?: CSSProperties;
 }
 
 const Button: React.FC<ButtonProps> = ({
+  style,
   children,
   size = 'md',
   variant = 'primary',
@@ -41,6 +44,7 @@ const Button: React.FC<ButtonProps> = ({
       } ${variantClasses[variant]} ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
       onClick={onClick}
       disabled={disabled}
+      style={style}
     >
       {startIcon && <span className="flex items-center">{startIcon}</span>}
       {children}

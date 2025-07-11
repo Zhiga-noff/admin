@@ -5,7 +5,7 @@ export const newFormatDateToday = (dateInput: Date) => {
   /* Сегодняшняя дата */
   const today = new Date();
   /* Установка вчерашней даты */
-  let yesterday: any = new Date(today);
+  const yesterday: any = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
 
   /* Убедимся, что время не влияет на сравнение, сбросив часы, минуты, секунды и миллисекунды */
@@ -22,15 +22,17 @@ export const newFormatDateToday = (dateInput: Date) => {
 
   if (dateForOldBrowser && dateForOldBrowser.toString() === today.toString()) {
     return 'Сегодня';
-  } else if (dateForOldBrowser && dateForOldBrowser.toString() === yesterday.toString()) {
-    return 'Вчера';
-  } else if (inputDate.toString() === today.toString()) {
-    return 'Сегодня';
-  } else if (inputDate.toString() === yesterday.toString()) {
-    return 'Вчера';
-  } else {
-    return null;
   }
+  if (dateForOldBrowser && dateForOldBrowser.toString() === yesterday.toString()) {
+    return 'Вчера';
+  }
+  if (inputDate.toString() === today.toString()) {
+    return 'Сегодня';
+  }
+  if (inputDate.toString() === yesterday.toString()) {
+    return 'Вчера';
+  }
+  return null;
 };
 
 /* Функция для установки удобного отображения часов и минут на выпусках */
@@ -43,11 +45,11 @@ export const setHoursAndMinutes = (dateInput: Date) => {
   let minutes: number | string = date.getMinutes();
 
   if (hours <= 9) {
-    hours = '0' + hours;
+    hours = `0${hours}`;
   }
 
   if (minutes <= 9) {
-    minutes = '0' + minutes;
+    minutes = `0${minutes}`;
   }
 
   return `${hours}:${minutes}`;
