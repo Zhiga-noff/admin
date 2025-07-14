@@ -8,6 +8,7 @@ import { toFormatDate } from '@/utils/time';
 import { GET_TRANSCRIBATION } from '@/constant/api';
 import { api } from '@/utils/api.services';
 import DropDownList from '@/components/list/row-of-list/drop-down-list/DropDownList';
+import styles from './RowOfListComponent.module.css';
 
 interface RowOfListProps {
   file: ListTypes;
@@ -17,16 +18,21 @@ interface RowOfListProps {
 const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
   // const { title, inFilePath, outFilePath, done, dateCreate, dateUpdate, id, stateTitle } = file;
   const [stateList, setStateList] = useState([]);
+  const [openDropMenu, setOpenDropMenu] = useState(false);
 
   const fetchStateList = async () => {
+    if (stateList.length) {
+      setOpenDropMenu((pre) => !pre);
+      return;
+    }
     const result = await api.get(`${GET_TRANSCRIBATION}/${file.id}/stages`, {
       params: {
         page: 1,
         size: 10,
       },
     });
-    console.log(result.data);
     setStateList(result.data);
+    setOpenDropMenu((pre) => !pre);
   };
 
   const published = toFormatDate(file?.dateCreate);
@@ -54,7 +60,7 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
           className="py-3 text-gray-500 text-theme-sm dark:text-gray-400 cursor-pointer"
           onClick={fetchStateList}
         >
-          🔽
+          <div className={`${styles.arrow} ${openDropMenu ? styles.active : ''}`} />
         </TableCell>
         {/* {flag && <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">{file.category}</TableCell>} */}
         <TableCell className="py-3 text-gray-500 text-theme-sm dark:text-gray-400">
@@ -81,7 +87,7 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
           )}
         </TableCell>
       </TableRow>
-      {stateList.length ? stateList.map((item) => <DropDownList file={item} />) : ''}
+      {stateList.length && openDropMenu ? stateList.map((item) => <DropDownList file={item} />) : ''}
     </>
   );
 };
