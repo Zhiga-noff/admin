@@ -79,6 +79,8 @@ export const toFormatDate = (date: Date): string | null => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
     hour12: false,
   };
 
