@@ -13,10 +13,8 @@ const DropzoneComponent: React.FC = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/png': [],
-      'image/jpeg': [],
-      'image/webp': [],
-      'image/svg+xml': [],
+      'audio/mpeg': [],
+      'video/mp4': [],
     },
   });
   return (
