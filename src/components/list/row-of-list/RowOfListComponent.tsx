@@ -5,7 +5,6 @@ import Button from '@/components/ui/button/Button';
 import { DownloadIcon } from '@/icons';
 import { ListTypes } from '@/types/list.types';
 import { toFormatDate } from '@/utils/time';
-import { GET_TRANSCRIBATION } from '@/constant/api';
 import { api } from '@/utils/api.services';
 import DropDownList from '@/components/list/row-of-list/drop-down-list/DropDownList';
 import styles from './RowOfListComponent.module.css';
@@ -13,9 +12,10 @@ import styles from './RowOfListComponent.module.css';
 interface RowOfListProps {
   file: ListTypes;
   flag: boolean;
+  url: string;
 }
 
-const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
+const RowOfListComponent: FC<RowOfListProps> = ({ file, flag, url }) => {
   // const { title, inFilePath, outFilePath, done, dateCreate, dateUpdate, id, stateTitle } = file;
   const [stateList, setStateList] = useState([]);
   const [openDropMenu, setOpenDropMenu] = useState(false);
@@ -25,7 +25,7 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag }) => {
       setOpenDropMenu((pre) => !pre);
       return;
     }
-    const result = await api.get(`${GET_TRANSCRIBATION}/${file.id}/stages`, {
+    const result = await api.get(`${url}/${file.id}/stages`, {
       params: {
         page: 1,
         size: 10,

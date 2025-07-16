@@ -19,9 +19,10 @@ const navItems: NavItem[] = [
     icon: <GridIcon />,
     name: 'Транскрибация',
     subItems: [
-      { name: 'Транскрибация', path: '/transcribe', pro: false },
-      { name: 'Субтитрирование', path: '/subtitre', pro: false },
-      { name: 'Транскрибация и перевод', path: '/translate', pro: false },
+      { name: 'Транскрибация', path: '/transcribation', pro: false },
+      { name: 'Субтитрирование', path: '/subtitles', pro: false },
+      { name: 'Транскрибация и перевод', path: '/transcribation-and-translate', pro: false },
+      { name: 'Транскрибация и проверка языка', path: '/transcribing-check-language', pro: false },
     ],
   },
   // {
