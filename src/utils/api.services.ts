@@ -9,3 +9,10 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+export const uploadApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_DOMAIN + MODIFICATION_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});

@@ -16,7 +16,7 @@ export default function SubtitlesPage() {
       <PageBreadcrumb pageTitle="Транскрибация" />
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="col-span-12">
-          <DropzoneComponent />
+          <DropzoneComponent keyOperation={'subtitles'} />
         </div>
         <div className="col-span-12">
           <ListComponent url={GET_SUBTITLES} />

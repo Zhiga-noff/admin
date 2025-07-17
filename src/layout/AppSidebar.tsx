@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSidebar } from '../context/SidebarContext';
 import { BoxCubeIcon, ChevronDownIcon, GridIcon, PieChartIcon, PlugInIcon } from '../icons/index';
+import { api } from '@/utils/api.services';
 
 type NavItem = {
   name: string;
@@ -14,16 +15,10 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
+const navItemsDefault: NavItem[] = [
   {
     icon: <GridIcon />,
     name: 'Транскрибация',
-    subItems: [
-      { name: 'Транскрибация', path: '/transcribation', pro: false },
-      { name: 'Субтитрирование', path: '/subtitles', pro: false },
-      { name: 'Транскрибация и перевод', path: '/transcribation-and-translate', pro: false },
-      { name: 'Транскрибация и проверка языка', path: '/transcribing-check-language', pro: false },
-    ],
   },
   // {
   //   icon: <CalenderIcon />,
@@ -194,10 +189,32 @@ const AppSidebar: React.FC = () => {
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>({});
+  const [navItems, setNavItems] = useState(navItemsDefault);
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   // const isActive = (path: string) => path === pathname;
   const isActive = useCallback((path: string) => path === pathname, [pathname]);
+
+  const request = async () => {
+    const res = await api.get('');
+    setNavItems((pre) => {
+      const newSubItems = res.data.map((item) => {
+        return {
+          name: item.title,
+          path: `/${item.key}`,
+          pro: false,
+        };
+      });
+      const ff = { ...pre[0] };
+      ff.subItems = newSubItems;
+      const newItemsRequest = [ff];
+      return newItemsRequest;
+    });
+  };
+
+  useLayoutEffect(() => {
+    request();
+  }, []);
 
   useEffect(() => {
     // Check if the current path matches any submenu item

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   description: '!!!',
 };
 
-export default function TranscribationAndTranslatePAge() {
+export default function TranscribationAndTranslatePage() {
   return (
     <div>
       <PageBreadcrumb pageTitle="Транскрибация" />
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="col-span-12">
-          <DropzoneComponent />
+          <DropzoneComponent keyOperation={'transcribation-and-translate'} />
         </div>
         <div className="col-span-12">
           <ListComponent url={GET_TRANSCRIBATION_AND_TRANSLATE} />

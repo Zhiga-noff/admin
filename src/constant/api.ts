@@ -7,3 +7,5 @@ export const GET_TRANSCRIBATION = '/transcribation/queue' as const;
 export const GET_TRANSCRIBATION_AND_TRANSLATE = '/transcribation-and-translate/queue' as const;
 export const GET_SUBTITLES = '/subtitles/queue' as const;
 export const GET_TRANSCRIBING_CHECK_LANGUAGE = '/transcribing-check-language' as const;
+
+export const POST_UPLOAD = '/upload';

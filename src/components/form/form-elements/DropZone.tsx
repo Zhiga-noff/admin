@@ -3,10 +3,23 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import ComponentCard from '../../common/ComponentCard';
+import { OperationKey } from '@/types/operation-key.types';
+import { uploadApi } from '@/utils/api.services';
+import { POST_UPLOAD } from '@/constant/api';
 
-const DropzoneComponent: React.FC = () => {
-  const onDrop = (acceptedFiles: File[]) => {
+interface DropZoneProps {
+  keyOperation: OperationKey;
+}
+
+const DropzoneComponent: React.FC<DropZoneProps> = ({ keyOperation }) => {
+  const onDrop = async (acceptedFiles: File[]) => {
     console.log('Files dropped:', acceptedFiles);
+    try {
+      await uploadApi.post(`/${keyOperation}${POST_UPLOAD}`, { file: acceptedFiles[0] });
+    } catch (er) {
+      console.log(er);
+    }
+
     // Handle file uploads here
   };
 
