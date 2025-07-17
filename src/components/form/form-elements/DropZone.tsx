@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
-import ComponentCard from '../../common/ComponentCard';
 import { OperationKey } from '@/types/operation-key.types';
 import { uploadApi } from '@/utils/api.services';
 import { POST_UPLOAD } from '@/constant/api';
+import ComponentCard from '../../common/ComponentCard';
 
 interface DropZoneProps {
   keyOperation: OperationKey;

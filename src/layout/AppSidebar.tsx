@@ -4,9 +4,11 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { api } from '@/utils/api.services';
 import { useSidebar } from '../context/SidebarContext';
 import { BoxCubeIcon, ChevronDownIcon, GridIcon, PieChartIcon, PlugInIcon } from '../icons/index';
-import { api } from '@/utils/api.services';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRequestSlice, setDataForPage } from '@/store/slices/pages-request.slices';
 
 type NavItem = {
   name: string;
@@ -20,35 +22,6 @@ const navItemsDefault: NavItem[] = [
     icon: <GridIcon />,
     name: 'Транскрибация',
   },
-  // {
-  //   icon: <CalenderIcon />,
-  //   name: "Calendar",
-  //   path: "/calendar",
-  // },
-  // {
-  //   icon: <UserCircleIcon />,
-  //   name: "User Profile",
-  //   path: "/profile",
-  // },
-  //
-  // {
-  //   name: "Forms",
-  //   icon: <ListIcon />,
-  //   subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  // },
-  // {
-  //   name: "Tables",
-  //   icon: <TableIcon />,
-  //   subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  // },
-  // {
-  //   name: "Pages",
-  //   icon: <PageIcon />,
-  //   subItems: [
-  //     { name: "Blank Page", path: "/blank", pro: false },
-  //     { name: "404 Error", path: "/error-404", pro: false },
-  //   ],
-  // },
 ];
 
 const othersItems: NavItem[] = [
@@ -84,6 +57,9 @@ const othersItems: NavItem[] = [
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const requestSlice = useSelector(getRequestSlice);
+  const dispatch = useDispatch();
+  const [dataPage, setDataPage] = useState([requestSlice]);
   const pathname = usePathname();
 
   const renderMenuItems = (navItems: NavItem[], menuType: 'main' | 'others') => (
@@ -151,6 +127,9 @@ const AppSidebar: React.FC = () => {
                       className={`menu-dropdown-item ${
                         isActive(subItem.path) ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'
                       }`}
+                      onClick={() => {
+                        clickToLinkPage(subItem.path);
+                      }}
                     >
                       {subItem.name}
                       <span className="ml-auto flex items-center gap-1">
@@ -196,20 +175,33 @@ const AppSidebar: React.FC = () => {
   const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
   const request = async () => {
-    const res = await api.get('');
-    setNavItems((pre) => {
-      const newSubItems = res.data.map((item) => {
-        return {
-          name: item.title,
-          path: `/${item.key}`,
-          pro: false,
-        };
+    try {
+      const res = await api.get('');
+      setDataPage(res.data);
+      setNavItems((pre) => {
+        const newSubItems = res.data.map((item) => {
+          return {
+            name: item.title,
+            path: `/${item.key}`,
+            pro: false,
+          };
+        });
+        const newItemsRequest = { ...pre[0] };
+        newItemsRequest.subItems = newSubItems;
+        return [newItemsRequest];
       });
-      const ff = { ...pre[0] };
-      ff.subItems = newSubItems;
-      const newItemsRequest = [ff];
-      return newItemsRequest;
+    } catch (er) {
+      console.log(er);
+    }
+  };
+
+  const clickToLinkPage = (path: string) => {
+    const findDataPage = dataPage.find((item) => {
+      return '/' + item.key === path;
     });
+    if (findDataPage) {
+      dispatch(setDataForPage(findDataPage));
+    }
   };
 
   useLayoutEffect(() => {

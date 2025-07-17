@@ -16,7 +16,7 @@ export default function TranscribationAndTranslatePage() {
       <PageBreadcrumb pageTitle="Транскрибация" />
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="col-span-12">
-          <DropzoneComponent keyOperation={'transcribation-and-translate'} />
+          <DropzoneComponent keyOperation="transcribation-and-translate" />
         </div>
         <div className="col-span-12">
           <ListComponent url={GET_TRANSCRIBATION_AND_TRANSLATE} />
