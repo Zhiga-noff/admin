@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/store/store';
+import { OperationKey } from '@/types/operation-key.types';
 
 interface Request {
-  key: string;
+  key: OperationKey;
   title: string;
   queuePath: string;
 }
