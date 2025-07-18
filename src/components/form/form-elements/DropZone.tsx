@@ -15,7 +15,7 @@ const DropzoneComponent: React.FC<DropZoneProps> = ({ keyOperation }) => {
   const onDrop = async (acceptedFiles: File[]) => {
     console.log('Files dropped:', acceptedFiles);
     try {
-      await uploadApi.post(`/${keyOperation}${POST_UPLOAD}`, { file: acceptedFiles[0] });
+      await uploadApi.post(`/${keyOperation}${POST_UPLOAD}/`, { file: acceptedFiles[0] });
     } catch (er) {
       console.log(er);
     }

@@ -25,7 +25,7 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag, url }) => {
       setOpenDropMenu((pre) => !pre);
       return;
     }
-    const result = await api.get(`${url}/${file.id}/stages`, {
+    const result = await api.get(`${url}${file.id}/stages`, {
       params: {
         page: 1,
         size: 10,
