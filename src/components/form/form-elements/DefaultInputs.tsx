@@ -48,6 +48,7 @@ export default function DefaultInputs() {
           <div className="relative">
             <Input type={showPassword ? 'text' : 'password'} placeholder="Enter your password" />
             <button
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
             >

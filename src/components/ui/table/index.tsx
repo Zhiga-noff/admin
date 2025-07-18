@@ -10,7 +10,6 @@ interface TableProps {
 interface TableHeaderProps {
   children: ReactNode; // Header row(s)
   className?: string; // Optional className for styling
-  onClick?: () => void;
 }
 
 // Props for TableBody

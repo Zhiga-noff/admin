@@ -1,4 +1,4 @@
-import { requestSlice } from '@/store/slices/pages-request.slices';
+import { requestSlice } from './pages-request.slices';
 
 export const reducerSlices = {
   [requestSlice.name]: requestSlice.reducer,

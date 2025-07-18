@@ -11,11 +11,10 @@ import styles from './RowOfListComponent.module.css';
 
 interface RowOfListProps {
   file: ListTypes;
-  flag: boolean;
   url: string;
 }
 
-const RowOfListComponent: FC<RowOfListProps> = ({ file, flag, url }) => {
+const RowOfListComponent: FC<RowOfListProps> = ({ file, url }) => {
   // const { title, inFilePath, outFilePath, done, dateCreate, dateUpdate, id, stateTitle } = file;
   const [stateList, setStateList] = useState([]);
   const [openDropMenu, setOpenDropMenu] = useState(false);
@@ -87,7 +86,9 @@ const RowOfListComponent: FC<RowOfListProps> = ({ file, flag, url }) => {
           )}
         </TableCell>
       </TableRow>
-      {stateList.length && openDropMenu ? stateList.map((item) => <DropDownList file={item} />) : ''}
+      {stateList.length && openDropMenu
+        ? stateList.map((item: ListTypes) => <DropDownList file={item} key={item.id} />)
+        : ''}
     </>
   );
 };

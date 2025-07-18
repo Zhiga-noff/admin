@@ -85,7 +85,7 @@ export default function ListComponent({ url }: ListComponentProps) {
             {/* Table Body */}
             <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
               {data.map((file: ListTypes) => {
-                return <RowOfListComponent file={file as ListTypes} url={url} flag={flag} key={file?.id as number} />;
+                return <RowOfListComponent file={file as ListTypes} url={url} key={file?.id as number} />;
               })}
             </TableBody>
           </Table>

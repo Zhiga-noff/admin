@@ -15,7 +15,7 @@ export default function TranscrPage() {
 
   useEffect(() => {
     setTimeout(() => {
-      if ('/' + key !== path) {
+      if (`/${key}` !== path) {
         notFound();
       }
     }, 1000);

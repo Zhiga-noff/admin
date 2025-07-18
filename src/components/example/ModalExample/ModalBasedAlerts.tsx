@@ -15,24 +15,28 @@ export default function ModalBasedAlerts() {
     <ComponentCard title="Modal Based Alerts">
       <div className="flex flex-wrap items-center gap-3">
         <button
+          type="button"
           onClick={successModal.openModal}
           className="px-4 py-3 text-sm font-medium text-white rounded-lg bg-success-500 shadow-theme-xs hover:bg-success-600"
         >
           Success Alert
         </button>
         <button
+          type="button"
           onClick={infoModal.openModal}
           className="px-4 py-3 text-sm font-medium text-white rounded-lg bg-blue-light-500 shadow-theme-xs hover:bg-blue-light-600"
         >
           Info Alert
         </button>
         <button
+          type="button"
           onClick={warningModal.openModal}
           className="px-4 py-3 text-sm font-medium text-white rounded-lg bg-warning-500 shadow-theme-xs hover:bg-warning-600"
         >
           Warning Alert
         </button>
         <button
+          type="button"
           onClick={errorModal.openModal}
           className="px-4 py-3 text-sm font-medium text-white rounded-lg bg-error-500 shadow-theme-xs hover:bg-error-600"
         >

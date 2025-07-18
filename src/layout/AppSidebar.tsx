@@ -5,10 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { api } from '@/utils/api.services';
-import { useSidebar } from '../context/SidebarContext';
-import { BoxCubeIcon, ChevronDownIcon, GridIcon, PieChartIcon, PlugInIcon } from '../icons/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRequestSlice, setDataForPage } from '@/store/slices/pages-request.slices';
+import { OperationKey } from '@/types/operation-key.types';
+import { useSidebar } from '../context/SidebarContext';
+import { BoxCubeIcon, ChevronDownIcon, GridIcon, PieChartIcon, PlugInIcon } from '../icons/index';
+
+interface Request {
+  key: OperationKey;
+  title: string;
+  queuePath: string;
+}
 
 type NavItem = {
   name: string;
@@ -68,6 +75,7 @@ const AppSidebar: React.FC = () => {
         <li key={nav.name}>
           {nav.subItems ? (
             <button
+              type="button"
               onClick={() => handleSubmenuToggle(index, menuType)}
               className={`menu-item group ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
@@ -179,7 +187,7 @@ const AppSidebar: React.FC = () => {
       const res = await api.get('');
       setDataPage(res.data);
       setNavItems((pre) => {
-        const newSubItems = res.data.map((item) => {
+        const newSubItems = res.data.map((item: Request) => {
           return {
             name: item.title,
             path: `/${item.key}`,
@@ -197,7 +205,7 @@ const AppSidebar: React.FC = () => {
 
   const clickToLinkPage = (path: string) => {
     const findDataPage = dataPage.find((item) => {
-      return '/' + item.key === path;
+      return `/${item.key}` === path;
     });
     if (findDataPage) {
       dispatch(setDataForPage(findDataPage));

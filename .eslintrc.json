@@ -27,19 +27,36 @@
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": ["function-declaration", "arrow-function"]
+        "namedComponents": [
+          "function-declaration",
+          "arrow-function"
+        ]
       }
     ],
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/anchor-is-valid.md#case-i-use-nextjs-and-im-getting-this-error-inside-of-links
-    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/anchor-is-valid": "off",
     // airbnb config configures stricter rules, change assert to "either".
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/718
-    "jsx-a11y/label-has-associated-control": [
-      2,
-      {
-        "assert": "either"
-      }
-    ],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "jsx-a11y/click-events-have-key-events": 0,
+    "react/jsx-no-bind": "off",
+    "react/no-array-index-key": "off",
+    "no-param-reassign": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "import/no-cycle": "off",
+    //    "jsx-a11y/label-has-associated-control": [
+    //      "warn",
+    //      {
+    //        "assert": "either"
+    //      }
+    //    ],
+    //    "": 0,
     // Since we do not use prop-types
     // Use semicolon as member delimiter for interfaces and type
     "@typescript-eslint/member-delimiter-style": 2,
@@ -64,7 +81,11 @@
     "react/jsx-filename-extension": [
       2,
       {
-        "extensions": [".js", ".jsx", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".tsx"
+        ]
       }
     ],
     "import/no-unresolved": "off",

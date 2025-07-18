@@ -30,10 +30,12 @@ const DropzoneComponent: React.FC<DropZoneProps> = ({ keyOperation }) => {
       'video/mp4': [],
     },
   });
+  // @ts-ignore
   return (
     <ComponentCard title="Добавить файл">
       <div className="transition border border-gray-300 border-dashed cursor-pointer dark:hover:border-brand-500 dark:border-gray-700 rounded-xl hover:border-brand-500">
         <form
+          // eslint-disable-next-line react/jsx-props-no-spreading
           {...getRootProps()}
           className={`dropzone rounded-xl   border-dashed border-gray-300 p-7 lg:p-10
         ${

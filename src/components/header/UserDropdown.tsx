@@ -17,9 +17,14 @@ export default function UserDropdown() {
   function closeDropdown() {
     setIsOpen(false);
   }
+
   return (
     <div className="relative">
-      <button onClick={toggleDropdown} className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle">
+      <button
+        type="button"
+        onClick={toggleDropdown}
+        className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle"
+      >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
           <Image width={44} height={44} src="/images/user/owner.jpg" alt="User" />
         </span>
